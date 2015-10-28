@@ -7,6 +7,7 @@ public class DemoCustomer {
 	private String city;
 	private String state;
 	private String zipcode;
+	private int id;
 	
 	public String getFirstName() {
 		return firstName;
@@ -43,6 +44,12 @@ public class DemoCustomer {
 	}
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

@@ -50,6 +50,7 @@ public class DatabaseCollection {
 	        	cus.setCity(result.getString("cust_city"));
 	        	cus.setState(result.getString("cust_state"));
 	        	cus.setZipcode(result.getString("cust_postal_code"));
+	        	cus.setId(result.getInt("customer_id"));
 	        	
 	            demoCus.add(cus);
 	        }
@@ -64,4 +65,39 @@ public class DatabaseCollection {
 		
 	}
 
+	public ArrayList<DemoCustomer> getCustomerById(int id){
+		ArrayList<DemoCustomer> demoCus = new ArrayList<DemoCustomer>(); 
+		
+		try{
+			Connection conn = DriverManager.getConnection(url,props);
+			
+			String sql ="select * from demo_customers where customer_id = ?";
+	
+	        //creating PreparedStatement object to execute query
+	        PreparedStatement preStatement = conn.prepareStatement(sql);
+	        preStatement.setInt(1, id);
+	        ResultSet result = preStatement.executeQuery();
+	      
+	        while(result.next()){
+	        	DemoCustomer cus = new DemoCustomer();
+	        	cus.setFirstName(result.getString("cust_first_name"));
+	        	cus.setLastName(result.getString("cust_last_name"));
+	        	cus.setAddress(result.getString("cust_street_address1"));
+	        	cus.setCity(result.getString("cust_city"));
+	        	cus.setState(result.getString("cust_state"));
+	        	cus.setZipcode(result.getString("cust_postal_code"));
+	        	cus.setId(result.getInt("customer_id"));
+	        	
+	            demoCus.add(cus);
+	        }
+	        
+	        conn.close();
+		}catch(Exception e){
+			demoCus = null;
+			e.printStackTrace();
+		}
+		
+		return demoCus;
+		
+	}
 }

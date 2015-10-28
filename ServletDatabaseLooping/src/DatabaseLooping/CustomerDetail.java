@@ -1,6 +1,5 @@
 package DatabaseLooping;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -12,17 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAssignment
+ * Servlet implementation class CustomerDetail
  */
-@WebServlet("/ServletAssignment")
-public class DatabaseLooping extends HttpServlet {
+@WebServlet("/CustomerDetail")
+public class CustomerDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DatabaseCollection databaseCollection;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DatabaseLooping() {
+    public CustomerDetail() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,9 +41,12 @@ public class DatabaseLooping extends HttpServlet {
 
 		// Actual logic goes here.
 	    PrintWriter out = response.getWriter();
+	    
+	    String custId = request.getParameter("CustId");
 	      
 	    //get data from database
-	    ArrayList<DemoCustomer> cus =  databaseCollection.getCustomerInfo();
+	    ArrayList<DemoCustomer> cus =  databaseCollection.getCustomerById(Integer.parseInt(custId));
+	    
 	      
 	    //print out in html
 	    printHtml(out, cus);
@@ -68,27 +70,33 @@ public class DatabaseLooping extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html lang='en'>");
 		out.println("<head>");
-		out.println("<title>Demo Customer</title>");
+		out.println("<title>Customer Detail</title>");
 		out.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\" integrity=\"sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==\" crossorigin=\"anonymous\">");
 		out.println("</head>");
 		out.println("<body>");
 		
 		//display content in body
 		out.println("<div class=\"container\">");
-		out.println("<h2>Customer Info</h2><br>");
+		out.println("<h2>Customer Detail Info</h2><br>");
 		out.println("<table class=\"table table-striped\">");
 		out.println("<thead>");
 		out.println("<tr>");
-		out.println("<th>Last Name</th>");
-		out.println("<th>First Name</th>");
+		out.println("<th>Name</th>");
+		out.println("<th>Address</th>");
+		out.println("<th>City</th>");
+		out.println("<th>State</th>");
+		out.println("<th>Zipcode</th>");
 		out.println("</tr>");
 		out.println("</thead>");
 		out.println("<tbody>");
 		//display customized data 
 		for (DemoCustomer d : cus){
 			out.println("<tr>");
-			out.println("<td><a href=\"CustomerDetail?CustId="+d.getId()+"\">"+d.getFirstName()+"</a></td>");
-			out.println("<td><a href=\"CustomerDetail?CustId="+d.getId()+"\">"+d.getLastName()+"</a></td>");
+			out.println("<td>"+d.getFirstName()+" "+d.getLastName()+"</td>");
+			out.println("<td>"+d.getAddress()+"</td>");
+			out.println("<td>"+d.getCity()+"</td>");
+			out.println("<td>"+d.getState()+"</td>");
+			out.println("<td>"+d.getZipcode()+"</td>");
 			out.println("</tr>");
 		}
 		//continue to complete body content
